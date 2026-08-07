@@ -1,33 +1,39 @@
 # duskloom.app
 
-Static site. No build step, no framework, no analytics.
+Marketing site. Static, no build step, no framework, no analytics.
+**The app itself is not served here** — it ships through the App Store and Google Play
+from the separate `duskloom-app` repo.
 
 | Path | File | What |
 |---|---|---|
-| `/` | `index.html` | Landing page, with the app embedded and playable |
-| `/app` | `app/index.html` | The real app — a copy of `duskloom-app/www/index.html` |
-| `/privacy` | `privacy/index.html` | Privacy policy. This is the URL both stores require. |
+| `/` | `index.html` | Landing page |
+| `/privacy` | `privacy/index.html` | Privacy policy — the URL both stores require |
+| `/shots/` | screenshots | Phone captures used in the gallery |
 
 ## Deploying
 
-Vercel builds nothing — it serves the files. Push to `main` and it redeploys.
+Vercel serves the files as they are. Push to `main` and it redeploys.
 
-## Keeping the app in sync
+## Adding the rest of the screenshots
 
-`app/index.html` is a copy. After any change to the app, replace it:
+Render them from the app repo:
 
-    cp ../duskloom-app/www/index.html app/index.html
+    node shots.js sounds colour timer breathe mixes
+
+That writes captioned store frames to `duskloom-app/store/`, and the raw phone
+captures to `/tmp/shots/`. The **raw** ones belong here — no caption bands. Copy them
+in as `2-sounds.png`, `3-colour.png`, `4-timer.png`, `5-breathe.png`, `6-mixes.png`,
+then add a `<figure>` for each in `index.html` where the comment marks the spot.
 
 ## Before launch
 
-- Replace `hello@duskloom.app` in `index.html` and `privacy/index.html` with the real address
-- Swap the two placeholder store buttons in `index.html` for the official Apple and
-  Google badge artwork, and point them at the real listings
+- Replace `hello@duskloom.app` in `index.html` and `privacy/index.html`
+- Swap the two placeholder buttons for the official Apple and Google badge artwork and
+  point them at the real listings
 - Add `og-image.png` (1200×630) and reference it with `<meta property="og:image">`
 
-## A promise worth keeping
+## No trackers
 
-There is no analytics, no cookie banner and no third-party script here, because the
-privacy page says the app collects nothing and the site should not quietly contradict
-it. If you ever want traffic numbers, use Vercel's own server-side analytics rather
-than a client-side tracker.
+No analytics, no cookie banner, no third-party scripts. The privacy page states the
+app collects nothing, and the site should not quietly contradict it. If you want
+traffic numbers, use Vercel's server-side analytics rather than a client-side tag.
