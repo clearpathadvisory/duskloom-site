@@ -64,11 +64,14 @@
   .demo-head{text-align:center;margin-bottom:22px}
   .demo-head h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.03em;margin:0 0 8px;font-weight:700}
   .demo-head p{color:var(--dim);margin:0;font-size:15.5px}
-  .phone{width:min(430px,92vw);margin:0 auto;border-radius:38px;overflow:hidden;position:relative;
-    border:1px solid rgba(255,255,255,.14);
-    box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 8px rgba(255,255,255,.03)}
-  .phone iframe{display:block;width:100%;height:820px;border:0;background:#0B0910}
-  .demo-foot{text-align:center;color:var(--dim);font-size:13.5px;margin-top:16px}
+  .gallery{display:flex;gap:20px;overflow-x:auto;padding:6px 2px 22px;scroll-snap-type:x mandatory;
+    justify-content:flex-start;scrollbar-width:none}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery figure{margin:0;flex:0 0 auto;width:min(300px,74vw);scroll-snap-align:center}
+  .gallery img{display:block;width:100%;border-radius:30px;border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 7px rgba(255,255,255,.03)}
+  .gallery figcaption{color:var(--dim);font-size:13.5px;margin-top:13px;text-align:center}
+  @media(min-width:900px){ .gallery{justify-content:center} }
 
   /* ---------- claims ---------- */
   section{padding:70px 0;border-top:1px solid var(--line)}
@@ -126,7 +129,7 @@
   <div class="wrap">
     <a class="mark" href="/">Dusk<span>loom</span></a>
     <div class="links">
-      <a href="#try">Try it</a>
+      <a href="#screens">Screens</a>
       <a href="#sounds" class="hide-s">Sounds</a>
       <a href="#price">Price</a>
       <a href="/privacy">Privacy</a>
@@ -139,25 +142,25 @@
     <h1>Sound that <em>never repeats</em> itself</h1>
     <p class="lede">Duskloom makes sound instead of playing it. Thirty-three layers, synthesized on your device as you listen — so there is no loop to notice at three in the morning.</p>
     <div class="cta-row">
-      <a class="btn btn-solid" href="#try">Try it in your browser</a>
-      <!-- Replace with the official Apple and Google badge artwork before launch -->
-      <a class="btn btn-ghost" href="#" id="ios">App Store</a>
-      <a class="btn btn-ghost" href="#" id="play">Google Play</a>
+      <!-- Replace both with the official Apple and Google badge artwork before launch -->
+      <a class="btn btn-solid" href="#" id="ios">Download on the App Store</a>
+      <a class="btn btn-ghost" href="#" id="play">Get it on Google Play</a>
     </div>
-    <p class="note">No account. No sign-up. Nothing to install to hear it.</p>
+    <p class="note">Free to use, with no account and no sign-up. One payment unlocks everything.</p>
   </div>
 </header>
 
-<div class="demo" id="try">
+<div class="demo" id="screens">
   <div class="wrap">
     <div class="demo-head">
-      <h2>This is the real app, running here</h2>
-      <p>Press play. Everything free is free here too — nothing is a demo build.</p>
+      <h2>What it looks like</h2>
+      <p>The bloom takes its colour from whatever you are playing.</p>
     </div>
-    <div class="phone">
-      <iframe src="/app/" title="Duskloom" allow="autoplay" loading="lazy"></iframe>
+    <div class="gallery">
+      <figure><img src="/shots/1-hero.png" alt="Duskloom playing a deep sleep mix at night" loading="lazy"><figcaption>Three layers, and a screen that follows them</figcaption></figure>
+      <!-- Drop 2-sounds.png, 3-colour.png, 4-timer.png, 5-breathe.png and 6-mixes.png
+           into /shots and add a <figure> for each. -->
     </div>
-    <p class="demo-foot">Works best with headphones or a speaker. Nothing is streamed — the sound is generated in this tab.</p>
   </div>
 </div>
 
@@ -229,7 +232,7 @@
       <details><summary>Does it really not loop?</summary><p>Really. There are no audio files in the app to loop. Noise is generated sample by sample, and events like raindrops, thunder and crackles are scheduled at random times as they occur. You can leave the same mix running for eight hours and no two minutes will be identical.</p></details>
       <details><summary>Will it keep playing when my phone locks?</summary><p>Yes. It declares itself an audio app to iOS and runs a playback service on Android, so it plays all night with the screen off and shows on your lock screen.</p></details>
       <details><summary>Do you collect anything?</summary><p>No, and not as a policy choice — the app makes no network requests, so there is no channel through which anything could leave your phone. Put it in airplane mode and it behaves identically. Your levels and saved mixes are stored on the device.</p></details>
-      <details><summary>What is free, exactly?</summary><p>All seven noise colours, plus rain, ocean, wind, fireplace, box fan, stream and crickets. Unlimited playback, background audio, the sleep timer and the paced breathing guide are never locked. Tap any paid sound and it plays for thirty seconds so you can hear what you would be buying.</p></details>
+      <details><summary>What is free, exactly?</summary><p>All seven noise colours, plus rain, ocean, wind, fireplace, box fan, stream and crickets. Unlimited playback, background audio, the sleep timer and the paced breathing guide are never locked. Inside the app, tap any paid sound and it plays for thirty seconds, so you hear exactly what you would be buying before you pay.</p></details>
       <details><summary>Is there a subscription?</summary><p>No, and there will not be one. A subscription pays for recording, licensing and hosting. We have none of those costs.</p></details>
       <details><summary>Does it help with tinnitus?</summary><p>Many people use coloured noise for it, and Duskloom generates white, pink, brown, green, blue, grey and violet noise properly rather than playing a recording of them. We make no medical claim — talk to an audiologist about what is right for you.</p></details>
     </div>
@@ -241,7 +244,7 @@
     <div>Duskloom by ClearPath Advisory</div>
     <div style="display:flex;gap:20px">
       <a href="/privacy">Privacy</a>
-      <a href="#try">Try it</a>
+      <a href="#screens">Screens</a>
       <a href="mailto:hello@duskloom.app">Contact</a>
     </div>
   </div>
@@ -255,7 +258,7 @@
       if(a.getAttribute('href') === '#'){
         e.preventDefault();
         a.textContent = 'Coming soon';
-        setTimeout(function(){ a.textContent = a.id === 'ios' ? 'App Store' : 'Google Play'; }, 1800);
+        setTimeout(function(){ a.textContent = a.id === 'ios' ? 'Download on the App Store' : 'Get it on Google Play'; }, 1800);
       }
     });
   });
