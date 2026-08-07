@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#F4F1F7; --dim:#9A92AC; --dimmer:#6E6880;
+    --ink:#FBFAFD; --dim:#C6C0D2; --dimmer:#9A93A8;
     --deep:#09070D; --panel:rgba(255,255,255,.045); --panel-2:rgba(255,255,255,.07);
     --line:rgba(255,255,255,.09);
     --mint:#7FD8C4; --sky:#8FB6F0; --warm:#E8A96B; --rose:#F0879B; --violet:#B79BF0;
@@ -26,7 +26,8 @@
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--deep);color:var(--ink);
     font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;line-height:1.6;overflow-x:hidden}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   a{color:inherit}
 
@@ -67,7 +68,8 @@
   h1{font-size:clamp(40px,6.6vw,74px);line-height:1.02;letter-spacing:-.045em;font-weight:700;margin:0 0 20px}
   h1 em{font-style:normal;background:linear-gradient(96deg,var(--mint),var(--sky) 58%,var(--violet));
     -webkit-background-clip:text;background-clip:text;color:transparent}
-  .lede{font-size:clamp(17px,2.2vw,20.5px);color:var(--dim);max-width:48ch;margin:0 auto 32px;line-height:1.55}
+  .lede{font-size:clamp(17.5px,2.2vw,21px);color:var(--dim);max-width:48ch;margin:0 auto 32px;
+    line-height:1.55;letter-spacing:-.01em}
   .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;height:56px;padding:0 26px;border-radius:28px;
     text-decoration:none;font-weight:600;font-size:16px;border:none;cursor:pointer;
@@ -78,28 +80,34 @@
   .btn-ghost:hover{transform:translateY(-2px);background:var(--panel-2)}
   .note{font-size:13.5px;color:var(--dimmer);margin-top:18px}
 
-  /* gallery marquee */
-  .gal{position:relative;padding:34px 0 78px;overflow:hidden}
-  .gal::before,.gal::after{content:"";position:absolute;top:0;bottom:0;width:12vw;z-index:3;pointer-events:none}
-  .gal::before{left:0;background:linear-gradient(90deg,var(--deep),transparent)}
-  .gal::after{right:0;background:linear-gradient(270deg,var(--deep),transparent)}
-  .track{display:flex;gap:26px;width:max-content;animation:slide 64s linear infinite}
-  .gal:hover .track{animation-play-state:paused}
-  @keyframes slide{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  .shot{flex:0 0 auto;width:264px;margin:0}
-  .shot img{display:block;width:100%;border-radius:30px;border:1px solid rgba(255,255,255,.13);
-    box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 7px rgba(255,255,255,.028);
-    transition:transform .5s cubic-bezier(.2,.8,.3,1)}
-  .shot:hover img{transform:translateY(-10px) scale(1.02)}
-  .shot figcaption{color:var(--dimmer);font-size:13px;margin-top:14px;text-align:center}
-  .gal-hint{text-align:center;color:var(--dimmer);font-size:12.5px;margin-top:4px}
+  /* gallery — framed devices, scrolled by hand */
+  .gal{position:relative;padding:30px 0 76px}
+  .gal-in{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:8px 24px 26px;scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
+  .gal-in::-webkit-scrollbar{display:none}
+  .gal-in.drag{cursor:grabbing;scroll-snap-type:none}
+  .gal-in::before,.gal-in::after{content:"";flex:0 0 max(0px,calc((100vw - 1120px)/2))}
+  .shot{flex:0 0 auto;width:256px;margin:0;scroll-snap-align:center}
+  .frame{border-radius:38px;padding:9px;background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.03));
+    box-shadow:0 30px 70px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.22);
+    transition:transform .45s cubic-bezier(.2,.8,.3,1),box-shadow .45s}
+  .shot:hover .frame{transform:translateY(-8px);box-shadow:0 42px 90px rgba(0,0,0,.72),
+    inset 0 1px 0 rgba(255,255,255,.3),0 0 0 1px rgba(127,216,196,.28)}
+  .frame img{display:block;width:100%;border-radius:30px}
+  .shot figcaption{color:var(--dim);font-size:13.5px;margin-top:16px;text-align:center}
+  .gal-nav{display:flex;gap:10px;justify-content:center;margin-top:4px}
+  .gal-nav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:var(--panel);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+    transition:background .25s,transform .2s,border-color .25s}
+  .gal-nav button:hover{background:var(--panel-2);transform:translateY(-2px);border-color:rgba(255,255,255,.24)}
+  .gal-nav svg{width:16px;height:16px;fill:currentColor}
 
   /* sections */
   section{padding:96px 0;border-top:1px solid var(--line);position:relative}
-  .kicker{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);
-    margin:0 0 14px;font-weight:600}
+  .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);
+    margin:0 0 14px;font-weight:600;opacity:.9}
   h2.big{font-size:clamp(30px,4.4vw,50px);letter-spacing:-.04em;line-height:1.05;margin:0 0 20px;font-weight:700}
-  .body{color:var(--dim);font-size:16.5px;max-width:56ch}
+  .body{color:var(--dim);font-size:17px;max-width:56ch;letter-spacing:-.005em}
   .body strong{color:var(--ink);font-weight:600}
   .body p+p{margin-top:16px}
   .two{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:start}
@@ -120,7 +128,7 @@
     transition:transform .4s cubic-bezier(.2,.8,.3,1),background .4s,border-color .4s}
   .card:hover{transform:translateY(-5px);background:var(--panel-2);border-color:rgba(255,255,255,.16)}
   .card h3{margin:0 0 8px;font-size:16.5px;letter-spacing:-.02em}
-  .card p{margin:0;color:var(--dim);font-size:14.5px;line-height:1.55}
+  .card p{margin:0;color:var(--dim);font-size:15px;line-height:1.55}
   .card .dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--mint));margin-bottom:15px;
     box-shadow:0 0 16px var(--c,var(--mint))}
 
@@ -128,14 +136,46 @@
   .lib{text-align:center}
   .lib .body{margin:0 auto}
   .pills{display:flex;flex-wrap:wrap;gap:9px;margin:38px auto 0;justify-content:center;max-width:920px}
-  .pills span{font-size:14px;color:var(--dim);background:var(--panel);border:1px solid var(--line);
-    border-radius:999px;padding:9px 18px;transition:color .3s,border-color .3s,background .3s,transform .3s}
-  .pills span:hover{color:var(--ink);border-color:rgba(255,255,255,.28);background:var(--panel-2);
-    transform:translateY(-2px)}
-  .pills span.free{color:var(--ink);border-color:rgba(127,216,196,.34);background:rgba(127,216,196,.08)}
+  .pills span{
+    --h:200;
+    position:relative;font-size:14.5px;font-weight:500;letter-spacing:-.01em;border-radius:999px;
+    padding:10px 19px;cursor:default;
+    color:hsl(var(--h) 85% 90%);
+    background:linear-gradient(165deg,hsl(var(--h) 52% 30%),hsl(var(--h) 50% 19%));
+    border:1px solid hsl(var(--h) 65% 52% / .6);
+    box-shadow:inset 0 1px 0 hsl(var(--h) 90% 72% / .32),
+               inset 0 -6px 12px hsl(var(--h) 70% 8% / .5),
+               0 3px 0 hsl(var(--h) 50% 14%),
+               0 8px 18px rgba(0,0,0,.5);
+    transform:translateY(0);
+    transition:transform .22s cubic-bezier(.2,.9,.3,1.2),box-shadow .22s,filter .22s}
+  .pills span:hover{transform:translateY(-3px);filter:brightness(1.16);
+    box-shadow:inset 0 1px 0 hsl(var(--h) 90% 80% / .45),
+               inset 0 -6px 12px hsl(var(--h) 70% 8% / .45),
+               0 5px 0 hsl(var(--h) 55% 10%),
+               0 16px 30px hsl(var(--h) 70% 12% / .7),
+               0 0 28px hsl(var(--h) 80% 45% / .38)}
+  .pills span:active{transform:translateY(1px);
+    box-shadow:inset 0 2px 6px hsl(var(--h) 70% 6% / .6),0 1px 0 hsl(var(--h) 55% 10%)}
+  /* free sounds are filled and bright; the paid ones are the same colour, held back */
+  .pills span.free{
+    color:hsl(var(--h) 30% 12%);font-weight:600;
+    background:linear-gradient(165deg,hsl(var(--h) 88% 76%),hsl(var(--h) 78% 56%));
+    border-color:hsl(var(--h) 90% 80% / .7);
+    box-shadow:inset 0 1px 0 hsl(var(--h) 100% 92% / .8),
+               inset 0 -7px 14px hsl(var(--h) 80% 38% / .45),
+               0 3px 0 hsl(var(--h) 70% 34%),
+               0 10px 24px hsl(var(--h) 80% 30% / .5)}
+  .pills span.free:hover{
+    box-shadow:inset 0 1px 0 hsl(var(--h) 100% 96% / .9),
+               inset 0 -7px 14px hsl(var(--h) 80% 40% / .4),
+               0 5px 0 hsl(var(--h) 70% 34%),
+               0 18px 34px hsl(var(--h) 80% 30% / .6),
+               0 0 34px hsl(var(--h) 85% 55% / .55)}
   .lib-key{display:flex;gap:22px;justify-content:center;align-items:center;margin-top:26px;
     font-size:13px;color:var(--dimmer);flex-wrap:wrap}
-  .lib-key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+  .lib-key i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:8px;vertical-align:-1px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 
   /* price */
   .price-wrap{position:relative;margin-top:46px}
@@ -159,7 +199,7 @@
   .rowlab .spacer{min-height:78px}
   .col ul,.rowlab ul{list-style:none;margin:18px 0 0;padding:0}
   .col li,.rowlab li{display:flex;gap:10px;align-items:flex-start;padding:11px 0;
-    border-top:1px solid var(--line);font-size:14.5px;color:var(--dim);min-height:47px}
+    border-top:1px solid var(--line);font-size:15px;color:var(--dim);min-height:47px}
   .col.us li{color:var(--ink)}
   .rowlab li{color:var(--dimmer)}
   .tick,.cross{flex:0 0 auto;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;margin-top:3px}
@@ -183,7 +223,7 @@
   summary::-webkit-details-marker{display:none}
   summary::after{content:"+";color:var(--dimmer);font-weight:400}
   details[open] summary::after{content:"–"}
-  details p{color:var(--dim);font-size:15.5px;margin:12px 0 0;max-width:66ch}
+  details p{color:var(--dim);font-size:16px;margin:12px 0 0;max-width:66ch}
 
   /* closing */
   .close{text-align:center;position:relative;overflow:hidden}
@@ -235,15 +275,18 @@
 </header>
 
 <div class="gal">
-  <div class="track" id="track">
-    <figure class="shot"><img src="/shots/1-hero.png" alt="A deep sleep mix playing at night" loading="lazy"><figcaption>Three layers, and a screen that follows them</figcaption></figure>
-    <figure class="shot"><img src="/shots/2-sounds.png" alt="The sound picker" loading="lazy"><figcaption>Thirty-three sounds, layered as you like</figcaption></figure>
-    <figure class="shot"><img src="/shots/3-colour.png" alt="Ocean nap with the figure shape" loading="lazy"><figcaption>Five shapes, colour from the mix</figcaption></figure>
-    <figure class="shot"><img src="/shots/4-timer.png" alt="Sleep timer" loading="lazy"><figcaption>A timer that fades rather than stops</figcaption></figure>
-    <figure class="shot"><img src="/shots/5-breathe.png" alt="Paced breathing" loading="lazy"><figcaption>Paced breathing, three patterns</figcaption></figure>
-    <figure class="shot"><img src="/shots/6-mixes.png" alt="Ready-made mixes" loading="lazy"><figcaption>Twelve mixes, or save your own</figcaption></figure>
+  <div class="gal-in" id="gal">
+    <figure class="shot"><div class="frame"><img src="/shots/1-hero.png" alt="A deep sleep mix playing at night" loading="lazy"></div><figcaption>Three layers, and a screen that follows them</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="/shots/2-sounds.png" alt="The sound picker" loading="lazy"></div><figcaption>Thirty-three sounds, layered as you like</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="/shots/3-colour.png" alt="Ocean nap with the figure shape" loading="lazy"></div><figcaption>Five shapes, colour from the mix</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="/shots/4-timer.png" alt="Sleep timer" loading="lazy"></div><figcaption>A timer that fades rather than stops</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="/shots/5-breathe.png" alt="Paced breathing" loading="lazy"></div><figcaption>Paced breathing, three patterns</figcaption></figure>
+    <figure class="shot"><div class="frame"><img src="/shots/6-mixes.png" alt="Ready-made mixes" loading="lazy"></div><figcaption>Twelve mixes, or save your own</figcaption></figure>
   </div>
-  <p class="gal-hint">Hover to pause</p>
+  <div class="gal-nav">
+    <button id="galPrev" aria-label="Previous screen"><svg viewBox="0 0 24 24"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
+    <button id="galNext" aria-label="Next screen"><svg viewBox="0 0 24 24"><path d="M8.6 7.4 10 6l6 6-6 6-1.4-1.4L13.2 12z"/></svg></button>
+  </div>
 </div>
 
 <section id="how">
@@ -288,12 +331,12 @@
     <h2 class="big r d1">Thirty-three layers.<br>Mix as many as you like.</h2>
     <p class="body r d2">Each has its own level, so a fan under brown noise under rain is one sound rather than three. Save the ones that work.</p>
     <div class="pills r d2">
-      <span class="free">White</span><span class="free">Pink</span><span class="free">Brown</span><span class="free">Green</span><span class="free">Blue</span><span class="free">Grey</span><span class="free">Violet</span>
-      <span class="free">Rain</span><span class="free">Ocean waves</span><span class="free">Wind</span><span class="free">Fireplace</span><span class="free">Box fan</span><span class="free">Stream</span><span class="free">Crickets</span>
-      <span>Rain on a tent</span><span>Distant thunder</span><span>Snowstorm</span><span>Lake shore</span><span>Waterfall</span><span>Underwater</span>
-      <span>Air purifier</span><span>Washing machine</span><span>Vacuum</span><span>Airplane cabin</span><span>Driving in rain</span>
-      <span>Heartbeat</span><span>Cat purring</span><span>Shushing</span><span>Womb</span>
-      <span>Binaural beat</span><span>Isochronic pulse</span><span>Held drone</span><span>Singing bowl</span>
+      <span class="free" style="--h:212.8">White</span><span class="free" style="--h:223.7">Pink</span><span class="free" style="--h:234.6">Brown</span><span class="free" style="--h:245.5">Green</span><span class="free" style="--h:256.4">Blue</span><span class="free" style="--h:267.3">Grey</span><span class="free" style="--h:278.2">Violet</span>
+      <span class="free" style="--h:158.3">Rain</span><span class="free" style="--h:103.8">Ocean waves</span><span class="free" style="--h:191">Wind</span><span class="free" style="--h:92.9">Fireplace</span><span class="free" style="--h:27.5">Box fan</span><span class="free" style="--h:125.6">Stream</span><span class="free" style="--h:16.3">Crickets</span>
+      <span style="--h:169.2">Rain on a tent</span><span style="--h:180.1">Distant thunder</span><span style="--h:201.9">Snowstorm</span><span style="--h:114.7">Lake shore</span><span style="--h:136.5">Waterfall</span><span style="--h:147.4">Underwater</span>
+      <span style="--h:38.4">Air purifier</span><span style="--h:49.3">Washing machine</span><span style="--h:60.2">Vacuum</span><span style="--h:71.1">Airplane cabin</span><span style="--h:82">Driving in rain</span>
+      <span style="--h:332.7">Heartbeat</span><span style="--h:343.6">Cat purring</span><span style="--h:354.5">Shushing</span><span style="--h:5.4">Womb</span>
+      <span style="--h:289.1">Binaural beat</span><span style="--h:300">Isochronic pulse</span><span style="--h:310.9">Held drone</span><span style="--h:321.8">Singing bowl</span>
     </div>
     <div class="lib-key r d3">
       <span><i style="background:rgba(127,216,196,.65)"></i>Free forever</span>
@@ -409,11 +452,29 @@
     document.querySelectorAll('.r').forEach(function(el){ el.classList.add('in'); });
   }
 
-  /* duplicate the strip so the marquee wraps seamlessly */
-  var track = document.getElementById('track');
-  if (track && !reduce) {
-    track.innerHTML += track.innerHTML;
-    track.querySelectorAll('figure:nth-child(n+7)').forEach(function(f){ f.setAttribute('aria-hidden','true'); });
+  /* gallery: arrows, and drag to scroll like a strip of prints on a table */
+  var gal = document.getElementById('gal');
+  if (gal) {
+    var step = function(){ var s = gal.querySelector('.shot'); return s ? s.offsetWidth + 22 : 280; };
+    var prev = document.getElementById('galPrev'), next = document.getElementById('galNext');
+    if (prev) prev.addEventListener('click', function(){ gal.scrollBy({left:-step(), behavior:'smooth'}); });
+    if (next) next.addEventListener('click', function(){ gal.scrollBy({left: step(), behavior:'smooth'}); });
+
+    var down = false, startX = 0, startL = 0, moved = false;
+    gal.addEventListener('pointerdown', function(e){
+      down = true; moved = false; startX = e.clientX; startL = gal.scrollLeft;
+      gal.classList.add('drag');
+    });
+    gal.addEventListener('pointermove', function(e){
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 3) moved = true;
+      gal.scrollLeft = startL - dx;
+    });
+    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+      gal.addEventListener(ev, function(){ down = false; gal.classList.remove('drag'); });
+    });
+    gal.addEventListener('click', function(e){ if (moved) e.preventDefault(); }, true);
   }
 
   /* the proof: a recording that repeats, beside sound that does not */
