@@ -4,123 +4,205 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Duskloom — sound for sleep and focus, generated as it plays</title>
-<meta name="description" content="33 sound layers, synthesized on your device as you listen, so nothing ever loops. Free to try right here in the browser. One payment unlocks everything — no subscription.">
+<meta name="description" content="33 sound layers, synthesized on your device as you listen, so nothing ever loops. One payment unlocks everything — no subscription, no account, no data collected.">
 <link rel="canonical" href="https://duskloom.app/">
 <meta property="og:title" content="Duskloom — sound that never repeats itself">
 <meta property="og:description" content="33 layers generated on your device as you listen. Nothing loops, nothing streams, nothing is collected.">
 <meta property="og:url" content="https://duskloom.app/">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0B0910">
+<meta property="og:image" content="https://duskloom.app/shots/1-hero.png">
+<meta name="theme-color" content="#09070D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#F2EEF4; --dim:#9A92AC; --deep:#0B0910; --deep-2:#151020;
-    --line:rgba(255,255,255,.10); --panel:rgba(255,255,255,.05);
-    --accent:#7FD8C4; --warm:#E8A96B;
+    --ink:#F4F1F7; --dim:#9A92AC; --dimmer:#6E6880;
+    --deep:#09070D; --panel:rgba(255,255,255,.045); --panel-2:rgba(255,255,255,.07);
+    --line:rgba(255,255,255,.09);
+    --mint:#7FD8C4; --sky:#8FB6F0; --warm:#E8A96B; --rose:#F0879B; --violet:#B79BF0;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--deep);color:var(--ink);
     font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   a{color:inherit}
 
-  /* ---------- nav ---------- */
-  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-    background:rgba(11,9,16,.72);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-  .mark{font-weight:600;letter-spacing:-.01em;font-size:17px;text-decoration:none}
+  /* reveal on scroll */
+  .r{opacity:0;transform:translateY(22px);
+     transition:opacity .9s cubic-bezier(.2,.7,.3,1),transform .9s cubic-bezier(.2,.7,.3,1)}
+  .r.in{opacity:1;transform:none}
+  .r.d1{transition-delay:.08s} .r.d2{transition-delay:.16s} .r.d3{transition-delay:.24s}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    background:rgba(9,7,13,.74);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .mark{font-weight:600;letter-spacing:-.015em;font-size:17.5px;text-decoration:none}
   .mark span{font-weight:400;color:var(--dim)}
-  nav .links{display:flex;gap:22px;align-items:center;font-size:14.5px;color:var(--dim)}
-  nav .links a{text-decoration:none}
+  nav .links{display:flex;gap:20px;align-items:center;font-size:14.5px;color:var(--dim)}
+  nav .links a{text-decoration:none;transition:color .2s}
   nav .links a:hover{color:var(--ink)}
-  @media(max-width:640px){ nav .links a.hide-s{display:none} }
+  .nav-cta{background:var(--ink);color:var(--deep)!important;padding:9px 17px;border-radius:20px;
+    font-weight:600;font-size:14px;transition:transform .16s}
+  .nav-cta:hover{transform:translateY(-1px)}
+  @media(max-width:700px){ nav .links a.hide-s{display:none} }
 
-  /* ---------- hero ---------- */
-  header{position:relative;padding:78px 0 44px;text-align:center;overflow:hidden}
-  header::before{content:"";position:absolute;left:50%;top:-16%;width:min(150vw,1100px);height:min(150vw,1100px);
-    transform:translateX(-50%);border-radius:50%;pointer-events:none;
-    background:radial-gradient(38% 34% at 40% 36%,rgba(127,216,196,.30),transparent 70%),
-               radial-gradient(42% 38% at 66% 42%,rgba(160,110,255,.24),transparent 70%),
-               radial-gradient(44% 40% at 46% 66%,rgba(232,169,107,.20),transparent 70%);
-    filter:blur(70px);opacity:.85}
-  header .wrap{position:relative}
-  h1{font-size:clamp(38px,6.4vw,68px);line-height:1.04;letter-spacing:-.04em;font-weight:700;margin:0 0 18px}
-  h1 em{font-style:normal;color:var(--accent)}
-  .lede{font-size:clamp(17px,2.2vw,20px);color:var(--dim);max-width:46ch;margin:0 auto 30px;line-height:1.55}
+  /* hero */
+  header{position:relative;padding:96px 0 56px;text-align:center;overflow:hidden}
+  .aura{position:absolute;left:50%;top:-26%;width:min(160vw,1200px);height:min(160vw,1200px);
+    transform:translateX(-50%);border-radius:50%;pointer-events:none;filter:blur(80px);
+    background:
+      radial-gradient(34% 30% at 38% 34%,rgba(127,216,196,.34),transparent 70%),
+      radial-gradient(38% 34% at 66% 40%,rgba(183,155,240,.28),transparent 70%),
+      radial-gradient(40% 36% at 48% 68%,rgba(232,169,107,.22),transparent 70%);
+    animation:drift 26s ease-in-out infinite alternate}
+  @keyframes drift{
+    from{transform:translateX(-50%) scale(1) rotate(0deg)}
+    to{transform:translateX(-50%) scale(1.14) rotate(9deg)}
+  }
+  header .wrap{position:relative;z-index:2}
+  h1{font-size:clamp(40px,6.6vw,74px);line-height:1.02;letter-spacing:-.045em;font-weight:700;margin:0 0 20px}
+  h1 em{font-style:normal;background:linear-gradient(96deg,var(--mint),var(--sky) 58%,var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(17px,2.2vw,20.5px);color:var(--dim);max-width:48ch;margin:0 auto 32px;line-height:1.55}
   .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:9px;height:54px;padding:0 24px;border-radius:27px;
-    text-decoration:none;font-weight:600;font-size:16px;border:none;cursor:pointer;transition:transform .16s}
-  .btn:active{transform:scale(.98)}
-  .btn-solid{background:var(--ink);color:var(--deep)}
+  .btn{display:inline-flex;align-items:center;height:56px;padding:0 26px;border-radius:28px;
+    text-decoration:none;font-weight:600;font-size:16px;border:none;cursor:pointer;
+    transition:transform .16s,box-shadow .3s,background .3s}
+  .btn-solid{background:var(--ink);color:var(--deep);box-shadow:0 10px 40px rgba(244,241,247,.14)}
+  .btn-solid:hover{transform:translateY(-2px);box-shadow:0 16px 50px rgba(244,241,247,.2)}
   .btn-ghost{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
-  .note{font-size:13.5px;color:var(--dim);margin-top:16px}
+  .btn-ghost:hover{transform:translateY(-2px);background:var(--panel-2)}
+  .note{font-size:13.5px;color:var(--dimmer);margin-top:18px}
 
-  /* ---------- the live app ---------- */
-  .demo{padding:26px 0 70px}
-  .demo-head{text-align:center;margin-bottom:22px}
-  .demo-head h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.03em;margin:0 0 8px;font-weight:700}
-  .demo-head p{color:var(--dim);margin:0;font-size:15.5px}
-  .gallery{display:flex;gap:20px;overflow-x:auto;padding:6px 2px 22px;scroll-snap-type:x mandatory;
-    justify-content:flex-start;scrollbar-width:none}
-  .gallery::-webkit-scrollbar{display:none}
-  .gallery figure{margin:0;flex:0 0 auto;width:min(300px,74vw);scroll-snap-align:center}
-  .gallery img{display:block;width:100%;border-radius:30px;border:1px solid rgba(255,255,255,.14);
-    box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 7px rgba(255,255,255,.03)}
-  .gallery figcaption{color:var(--dim);font-size:13.5px;margin-top:13px;text-align:center}
-  @media(min-width:900px){ .gallery{justify-content:center} }
+  /* gallery marquee */
+  .gal{position:relative;padding:34px 0 78px;overflow:hidden}
+  .gal::before,.gal::after{content:"";position:absolute;top:0;bottom:0;width:12vw;z-index:3;pointer-events:none}
+  .gal::before{left:0;background:linear-gradient(90deg,var(--deep),transparent)}
+  .gal::after{right:0;background:linear-gradient(270deg,var(--deep),transparent)}
+  .track{display:flex;gap:26px;width:max-content;animation:slide 64s linear infinite}
+  .gal:hover .track{animation-play-state:paused}
+  @keyframes slide{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .shot{flex:0 0 auto;width:264px;margin:0}
+  .shot img{display:block;width:100%;border-radius:30px;border:1px solid rgba(255,255,255,.13);
+    box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 7px rgba(255,255,255,.028);
+    transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+  .shot:hover img{transform:translateY(-10px) scale(1.02)}
+  .shot figcaption{color:var(--dimmer);font-size:13px;margin-top:14px;text-align:center}
+  .gal-hint{text-align:center;color:var(--dimmer);font-size:12.5px;margin-top:4px}
 
-  /* ---------- claims ---------- */
-  section{padding:70px 0;border-top:1px solid var(--line)}
-  .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:0 0 12px;font-weight:600}
-  h2.big{font-size:clamp(28px,4.2vw,44px);letter-spacing:-.035em;line-height:1.1;margin:0 0 18px;font-weight:700;max-width:20ch}
-  .body{color:var(--dim);font-size:16.5px;max-width:58ch}
+  /* sections */
+  section{padding:96px 0;border-top:1px solid var(--line);position:relative}
+  .kicker{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);
+    margin:0 0 14px;font-weight:600}
+  h2.big{font-size:clamp(30px,4.4vw,50px);letter-spacing:-.04em;line-height:1.05;margin:0 0 20px;font-weight:700}
+  .body{color:var(--dim);font-size:16.5px;max-width:56ch}
   .body strong{color:var(--ink);font-weight:600}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start}
-  @media(max-width:820px){ .two{grid-template-columns:1fr;gap:28px} }
+  .body p+p{margin-top:16px}
+  .two{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:start}
+  @media(max-width:860px){ .two{grid-template-columns:1fr;gap:26px} section{padding:70px 0} }
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px;margin-top:34px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px}
-  .card h3{margin:0 0 7px;font-size:16.5px;letter-spacing:-.015em}
+  /* the proof */
+  .proof{margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){ .proof{grid-template-columns:1fr} }
+  .strip{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px 18px 14px}
+  .strip.us{border-color:rgba(127,216,196,.3);background:rgba(127,216,196,.05)}
+  .strip h4{margin:0 0 3px;font-size:15.5px;letter-spacing:-.015em}
+  .strip small{display:block;color:var(--dimmer);font-size:12.5px;margin-bottom:13px}
+  .strip.us small{color:var(--mint)}
+  .strip canvas{display:block;width:100%;height:76px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:14px;margin-top:44px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;
+    transition:transform .4s cubic-bezier(.2,.8,.3,1),background .4s,border-color .4s}
+  .card:hover{transform:translateY(-5px);background:var(--panel-2);border-color:rgba(255,255,255,.16)}
+  .card h3{margin:0 0 8px;font-size:16.5px;letter-spacing:-.02em}
   .card p{margin:0;color:var(--dim);font-size:14.5px;line-height:1.55}
-  .card .dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--accent));margin-bottom:13px}
+  .card .dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--mint));margin-bottom:15px;
+    box-shadow:0 0 16px var(--c,var(--mint))}
 
-  .sounds{display:flex;flex-wrap:wrap;gap:7px;margin-top:26px}
-  .sounds span{font-size:13.5px;color:var(--dim);background:var(--panel);border:1px solid var(--line);
-    border-radius:999px;padding:6px 13px}
+  /* library */
+  .lib{text-align:center}
+  .lib .body{margin:0 auto}
+  .pills{display:flex;flex-wrap:wrap;gap:9px;margin:38px auto 0;justify-content:center;max-width:920px}
+  .pills span{font-size:14px;color:var(--dim);background:var(--panel);border:1px solid var(--line);
+    border-radius:999px;padding:9px 18px;transition:color .3s,border-color .3s,background .3s,transform .3s}
+  .pills span:hover{color:var(--ink);border-color:rgba(255,255,255,.28);background:var(--panel-2);
+    transform:translateY(-2px)}
+  .pills span.free{color:var(--ink);border-color:rgba(127,216,196,.34);background:rgba(127,216,196,.08)}
+  .lib-key{display:flex;gap:22px;justify-content:center;align-items:center;margin-top:26px;
+    font-size:13px;color:var(--dimmer);flex-wrap:wrap}
+  .lib-key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px}
 
-  /* ---------- pricing ---------- */
-  .price{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px;max-width:760px}
-  @media(max-width:700px){ .price{grid-template-columns:1fr} }
-  .pc{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px}
-  .pc.us{border-color:var(--accent);background:rgba(127,216,196,.07)}
-  .pc .h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
-  .pc .h b{font-size:17px;letter-spacing:-.015em}
-  .pc .h i{font-style:normal;font-size:15px;color:var(--dim)}
-  .pc.us .h i{color:var(--accent);font-weight:600}
-  .dots{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-  .dots u{width:10px;height:10px;border-radius:50%;background:var(--dim);opacity:.4;text-decoration:none}
-  .dots u.on{opacity:.85}
-  .pc.us .dots u{background:var(--accent);opacity:1;width:12px;height:12px}
-  .pc p{margin:0;font-size:14.5px;color:var(--dim)}
+  /* price */
+  .price-wrap{position:relative;margin-top:46px}
+  .glow{position:absolute;right:4%;top:-14%;width:min(62vw,540px);height:min(62vw,540px);border-radius:50%;
+    pointer-events:none;filter:blur(90px);z-index:0;
+    background:radial-gradient(circle,rgba(127,216,196,.30),rgba(143,182,240,.14) 55%,transparent 72%);
+    animation:pulse 9s ease-in-out infinite alternate}
+  @keyframes pulse{ from{transform:scale(.94);opacity:.72} to{transform:scale(1.1);opacity:1} }
+  .cols{position:relative;z-index:2;display:grid;grid-template-columns:.85fr 1fr 1fr;
+    background:rgba(9,7,13,.6);border:1px solid var(--line);border-radius:26px;overflow:hidden;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .col,.rowlab{padding:26px 22px}
+  .col+.col,.col{border-left:1px solid var(--line)}
+  .col.us{background:linear-gradient(180deg,rgba(127,216,196,.13),rgba(127,216,196,.03));
+    box-shadow:inset 0 0 0 1.5px rgba(127,216,196,.35)}
+  .col .t,.rowlab .t{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);
+    margin-bottom:10px;font-weight:600}
+  .col.us .t{color:var(--mint)}
+  .col .p{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1;min-height:78px}
+  .col .p small{display:block;font-size:13.5px;font-weight:400;color:var(--dim);letter-spacing:0;margin-top:6px}
+  .rowlab .spacer{min-height:78px}
+  .col ul,.rowlab ul{list-style:none;margin:18px 0 0;padding:0}
+  .col li,.rowlab li{display:flex;gap:10px;align-items:flex-start;padding:11px 0;
+    border-top:1px solid var(--line);font-size:14.5px;color:var(--dim);min-height:47px}
+  .col.us li{color:var(--ink)}
+  .rowlab li{color:var(--dimmer)}
+  .tick,.cross{flex:0 0 auto;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;margin-top:3px}
+  .tick{background:rgba(127,216,196,.18)} .cross{background:rgba(255,255,255,.06)}
+  .tick svg{width:9px;height:9px;fill:var(--mint)} .cross svg{width:9px;height:9px;fill:var(--dimmer)}
+  .why-price{color:var(--dim);font-size:16px;max-width:62ch;margin:32px auto 0;text-align:center}
+  @media(max-width:820px){
+    .cols{grid-template-columns:1fr}
+    .rowlab{display:none}
+    .col{border-left:none;border-top:1px solid var(--line)}
+    .col li::before{content:attr(data-lab);color:var(--dimmer);font-size:12.5px;
+      display:block;width:118px;flex:0 0 118px}
+    .col li{align-items:center}
+  }
 
-  /* ---------- faq ---------- */
-  details{border-bottom:1px solid var(--line);padding:16px 0}
-  summary{cursor:pointer;font-size:17px;font-weight:600;letter-spacing:-.015em;list-style:none;
-    display:flex;justify-content:space-between;gap:16px}
+  /* faq */
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  summary{cursor:pointer;font-size:17.5px;font-weight:600;letter-spacing:-.02em;list-style:none;
+    display:flex;justify-content:space-between;gap:16px;transition:color .2s}
+  summary:hover{color:var(--mint)}
   summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";color:var(--dim);font-weight:400}
+  summary::after{content:"+";color:var(--dimmer);font-weight:400}
   details[open] summary::after{content:"–"}
-  details p{color:var(--dim);font-size:15.5px;margin:11px 0 0;max-width:64ch}
+  details p{color:var(--dim);font-size:15.5px;margin:12px 0 0;max-width:66ch}
 
-  footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--dim);font-size:14px}
+  /* closing */
+  .close{text-align:center;position:relative;overflow:hidden}
+  .close .aura2{position:absolute;left:50%;bottom:-64%;width:min(140vw,1000px);height:min(140vw,1000px);
+    transform:translateX(-50%);border-radius:50%;filter:blur(90px);pointer-events:none;
+    background:radial-gradient(circle,rgba(127,216,196,.22),rgba(183,155,240,.12) 50%,transparent 70%);
+    animation:pulse 12s ease-in-out infinite alternate}
+  .close .wrap{position:relative;z-index:2}
+
+  footer{border-top:1px solid var(--line);padding:42px 0 64px;color:var(--dimmer);font-size:14px}
   footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  footer a{text-decoration:none}
+  footer a{text-decoration:none;transition:color .2s}
   footer a:hover{color:var(--ink)}
-  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .r{opacity:1;transform:none}
+    .gal{overflow-x:auto}
+  }
 </style>
 </head>
 <body>
@@ -129,115 +211,173 @@
   <div class="wrap">
     <a class="mark" href="/">Dusk<span>loom</span></a>
     <div class="links">
-      <a href="#screens">Screens</a>
+      <a href="#how" class="hide-s">Why</a>
       <a href="#sounds" class="hide-s">Sounds</a>
       <a href="#price">Price</a>
-      <a href="/privacy">Privacy</a>
+      <a href="/privacy" class="hide-s">Privacy</a>
+      <a href="#get" class="nav-cta">Get it</a>
     </div>
   </div>
 </nav>
 
 <header>
+  <div class="aura"></div>
   <div class="wrap">
-    <h1>Sound that <em>never repeats</em> itself</h1>
-    <p class="lede">Duskloom makes sound instead of playing it. Thirty-three layers, synthesized on your device as you listen — so there is no loop to notice at three in the morning.</p>
-    <div class="cta-row">
+    <h1 class="r">Sound that <em>never repeats</em> itself</h1>
+    <p class="lede r d1">Duskloom makes sound instead of playing it. Thirty-three layers, synthesized on your device as you listen — so there is no loop to notice at three in the morning.</p>
+    <div class="cta-row r d2">
       <!-- Replace both with the official Apple and Google badge artwork before launch -->
       <a class="btn btn-solid" href="#" id="ios">Download on the App Store</a>
       <a class="btn btn-ghost" href="#" id="play">Get it on Google Play</a>
     </div>
-    <p class="note">Free to use, with no account and no sign-up. One payment unlocks everything.</p>
+    <p class="note r d3">Free to use, no account, no sign-up. One payment unlocks everything.</p>
   </div>
 </header>
 
-<div class="demo" id="screens">
-  <div class="wrap">
-    <div class="demo-head">
-      <h2>What it looks like</h2>
-      <p>The bloom takes its colour from whatever you are playing.</p>
-    </div>
-    <div class="gallery">
-      <figure><img src="/shots/1-hero.png" alt="Duskloom playing a deep sleep mix at night" loading="lazy"><figcaption>Three layers, and a screen that follows them</figcaption></figure>
-      <figure><img src="/shots/2-sounds.png" alt="The sound picker, thirty-three orbs" loading="lazy"><figcaption>Thirty-three sounds, layered as you like</figcaption></figure>
-      <figure><img src="/shots/3-colour.png" alt="Daylight mode with the figure hero" loading="lazy"><figcaption>A day mode that switches itself at dusk</figcaption></figure>
-      <figure><img src="/shots/4-timer.png" alt="Sleep timer options" loading="lazy"><figcaption>A timer that fades out rather than stopping</figcaption></figure>
-      <figure><img src="/shots/5-breathe.png" alt="Paced breathing guide" loading="lazy"><figcaption>Paced breathing, three patterns</figcaption></figure>
-      <figure><img src="/shots/6-mixes.png" alt="Ready-made mixes" loading="lazy"><figcaption>Twelve mixes, or save your own</figcaption></figure>
-    </div>
+<div class="gal">
+  <div class="track" id="track">
+    <figure class="shot"><img src="/shots/1-hero.png" alt="A deep sleep mix playing at night" loading="lazy"><figcaption>Three layers, and a screen that follows them</figcaption></figure>
+    <figure class="shot"><img src="/shots/2-sounds.png" alt="The sound picker" loading="lazy"><figcaption>Thirty-three sounds, layered as you like</figcaption></figure>
+    <figure class="shot"><img src="/shots/3-colour.png" alt="Ocean nap with the figure shape" loading="lazy"><figcaption>Five shapes, colour from the mix</figcaption></figure>
+    <figure class="shot"><img src="/shots/4-timer.png" alt="Sleep timer" loading="lazy"><figcaption>A timer that fades rather than stops</figcaption></figure>
+    <figure class="shot"><img src="/shots/5-breathe.png" alt="Paced breathing" loading="lazy"><figcaption>Paced breathing, three patterns</figcaption></figure>
+    <figure class="shot"><img src="/shots/6-mixes.png" alt="Ready-made mixes" loading="lazy"><figcaption>Twelve mixes, or save your own</figcaption></figure>
   </div>
+  <p class="gal-hint">Hover to pause</p>
 </div>
 
 <section id="how">
-  <div class="wrap two">
-    <div>
-      <p class="kicker">Why it sounds different</p>
-      <h2 class="big">Every competitor is playing you a recording</h2>
-    </div>
-    <div class="body">
-      <p>A rain track is a few seconds of audio repeating for eight hours. Once you have heard the seam, you cannot unhear it — and at 3am you have nothing to do but listen for it.</p>
-      <p><strong>Duskloom has no audio files at all.</strong> Rain is noise through filters with individual drops landing at random. Ocean waves swell every eight to fifteen seconds and never twice the same. A fireplace is a bed of embers with crackles scheduled as they happen.</p>
-      <p>Because it generates rather than streams, it works in airplane mode, in a basement, on a flight. It makes <strong>no network requests at all</strong> — there is nothing to collect and no account to make.</p>
-    </div>
-  </div>
-
   <div class="wrap">
+    <div class="two">
+      <div>
+        <p class="kicker r">Why it sounds different</p>
+        <h2 class="big r d1">Every competitor is playing you a recording</h2>
+      </div>
+      <div class="body r d2">
+        <p>A rain track is a few seconds of audio repeating for eight hours. Once you have heard the seam, you cannot unhear it — and at 3am you have nothing to do but listen for it.</p>
+        <p><strong>Duskloom has no audio files at all.</strong> Rain is noise through filters with individual drops landing at random. Ocean waves swell every eight to fifteen seconds and never twice the same. A fireplace is a bed of embers with crackles scheduled as they happen.</p>
+        <p>Because it generates rather than streams, it works in airplane mode, in a basement, on a flight. It makes <strong>no network requests at all</strong> — nothing to collect, no account to make.</p>
+      </div>
+    </div>
+
+    <div class="proof r d2">
+      <div class="strip">
+        <h4>A looping recording</h4>
+        <small>Watch the seam come round again</small>
+        <canvas id="cLoop"></canvas>
+      </div>
+      <div class="strip us">
+        <h4>Duskloom</h4>
+        <small>Generated as it plays — no seam to find</small>
+        <canvas id="cGen"></canvas>
+      </div>
+    </div>
+
     <div class="grid">
-      <div class="card"><div class="dot" style="--c:#7FD8C4"></div><h3>Nothing loops</h3><p>Two nights of the same mix are never the same audio. There is no seam because there is no recording.</p></div>
-      <div class="card"><div class="dot" style="--c:#8FB6F0"></div><h3>Fades, never cuts</h3><p>The sleep timer ramps to silence across the final minute. The ending is what wakes you.</p></div>
-      <div class="card"><div class="dot" style="--c:#E8A96B"></div><h3>Plays with the screen locked</h3><p>All night, in your hand or on the floor, with a wake alarm that fades the mix down before it rings.</p></div>
-      <div class="card"><div class="dot" style="--c:#F0879B"></div><h3>Colour follows the sound</h3><p>Every layer has its own hue. The whole screen takes the blend of whatever you are playing.</p></div>
+      <div class="card r"><div class="dot" style="--c:#7FD8C4"></div><h3>Nothing loops</h3><p>Two nights of the same mix are never the same audio. There is no seam because there is no recording.</p></div>
+      <div class="card r d1"><div class="dot" style="--c:#8FB6F0"></div><h3>Fades, never cuts</h3><p>The sleep timer ramps to silence across the final minute. The ending is what wakes you.</p></div>
+      <div class="card r d2"><div class="dot" style="--c:#E8A96B"></div><h3>Plays with the screen locked</h3><p>All night, with a wake alarm that fades the mix down before a bowl rings, gently.</p></div>
+      <div class="card r d3"><div class="dot" style="--c:#F0879B"></div><h3>Colour follows the sound</h3><p>Every layer has its own hue. The whole screen takes the blend of whatever you play.</p></div>
     </div>
   </div>
 </section>
 
-<section id="sounds">
+<section id="sounds" class="lib">
   <div class="wrap">
-    <p class="kicker">The library</p>
-    <h2 class="big">Thirty-three layers. Mix as many as you like.</h2>
-    <p class="body">Each has its own level, so a fan under brown noise under rain is one sound rather than three. Save the ones that work.</p>
-    <div class="sounds">
-      <span>White</span><span>Pink</span><span>Brown</span><span>Green</span><span>Blue</span><span>Grey</span><span>Violet</span>
-      <span>Rain</span><span>Rain on a tent</span><span>Distant thunder</span><span>Wind</span><span>Snowstorm</span>
-      <span>Ocean waves</span><span>Lake shore</span><span>Stream</span><span>Waterfall</span><span>Underwater</span>
-      <span>Box fan</span><span>Air purifier</span><span>Washing machine</span><span>Vacuum</span><span>Airplane cabin</span><span>Driving in rain</span><span>Fireplace</span>
-      <span>Heartbeat</span><span>Cat purring</span><span>Shushing</span><span>Womb</span><span>Crickets</span>
+    <p class="kicker r">The library</p>
+    <h2 class="big r d1">Thirty-three layers.<br>Mix as many as you like.</h2>
+    <p class="body r d2">Each has its own level, so a fan under brown noise under rain is one sound rather than three. Save the ones that work.</p>
+    <div class="pills r d2">
+      <span class="free">White</span><span class="free">Pink</span><span class="free">Brown</span><span class="free">Green</span><span class="free">Blue</span><span class="free">Grey</span><span class="free">Violet</span>
+      <span class="free">Rain</span><span class="free">Ocean waves</span><span class="free">Wind</span><span class="free">Fireplace</span><span class="free">Box fan</span><span class="free">Stream</span><span class="free">Crickets</span>
+      <span>Rain on a tent</span><span>Distant thunder</span><span>Snowstorm</span><span>Lake shore</span><span>Waterfall</span><span>Underwater</span>
+      <span>Air purifier</span><span>Washing machine</span><span>Vacuum</span><span>Airplane cabin</span><span>Driving in rain</span>
+      <span>Heartbeat</span><span>Cat purring</span><span>Shushing</span><span>Womb</span>
       <span>Binaural beat</span><span>Isochronic pulse</span><span>Held drone</span><span>Singing bowl</span>
+    </div>
+    <div class="lib-key r d3">
+      <span><i style="background:rgba(127,216,196,.65)"></i>Free forever</span>
+      <span><i style="background:rgba(255,255,255,.16)"></i>Included with one payment</span>
     </div>
   </div>
 </section>
 
 <section id="price">
   <div class="wrap">
-    <p class="kicker">Price</p>
-    <h2 class="big">One payment. Not one a month.</h2>
-    <p class="body">Duskloom is free forever with all seven noise colours and seven more sounds, unlimited playback, the sleep timer and the breathing guide. One purchase adds the remaining nineteen sounds, unlimited saved mixes and the wake alarm.</p>
-    <div class="price">
-      <div class="pc">
-        <div class="h"><b>Most sound apps</b><i>$5–10 every month</i></div>
-        <div class="dots"><u class="on"></u><u class="on"></u><u class="on"></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
-        <p>A payment every month for as long as you keep it.</p>
-      </div>
-      <div class="pc us">
-        <div class="h"><b>Duskloom</b><i>$14.99</i></div>
-        <div class="dots"><u></u></div>
-        <p>One payment. Nothing after it, ever.</p>
+    <p class="kicker r">Price</p>
+    <h2 class="big r d1">One payment. Not one a month.</h2>
+    <p class="body r d2">Free forever with fourteen sounds, unlimited playback, the sleep timer and the breathing guide. One purchase adds the rest.</p>
+
+    <div class="price-wrap r d2">
+      <div class="glow"></div>
+      <div class="cols">
+        <div class="rowlab">
+          <div class="t">&nbsp;</div>
+          <div class="spacer"></div>
+          <ul>
+            <li>Sounds</li>
+            <li>Repetition</li>
+            <li>Works offline</li>
+            <li>Account needed</li>
+            <li>Data collected</li>
+            <li>Cost after year one</li>
+          </ul>
+        </div>
+
+        <div class="col">
+          <div class="t">Most sound apps</div>
+          <div class="p">$5–10<small>every month, forever</small></div>
+          <ul>
+            <li data-lab="Sounds"><span class="cross"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></span>Behind a subscription</li>
+            <li data-lab="Repetition"><span class="cross"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></span>Recorded, then repeated</li>
+            <li data-lab="Offline"><span class="cross"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></span>Download first</li>
+            <li data-lab="Account"><span class="cross"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></span>Usually</li>
+            <li data-lab="Data"><span class="cross"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg></span>Usually</li>
+            <li data-lab="Year two"><strong style="color:var(--ink)">$60–120 a year</strong></li>
+          </ul>
+        </div>
+
+        <div class="col us">
+          <div class="t">Duskloom</div>
+          <div class="p">$14.99<small>once, and never again</small></div>
+          <ul>
+            <li data-lab="Sounds"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>All 33, fourteen free</li>
+            <li data-lab="Repetition"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>None — generated live</li>
+            <li data-lab="Offline"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>Entirely, always</li>
+            <li data-lab="Account"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>Never</li>
+            <li data-lab="Data"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>None. No network at all.</li>
+            <li data-lab="Year two"><strong>$0</strong></li>
+          </ul>
+        </div>
       </div>
     </div>
-    <p class="body" style="margin-top:22px">We host nothing and stream nothing, so there is no running cost to pass on to you. That is the entire reason this can be a single purchase.</p>
+    <p class="why-price r d3">We host nothing and stream nothing, so there is no running cost to pass on to you. That is the entire reason this can be a single purchase — and why it will stay one.</p>
   </div>
 </section>
 
 <section id="faq">
   <div class="wrap">
-    <p class="kicker">Questions</p>
-    <h2 class="big">Reasonable things to ask</h2>
-    <div style="margin-top:26px">
-      <details><summary>Does it really not loop?</summary><p>Really. There are no audio files in the app to loop. Noise is generated sample by sample, and events like raindrops, thunder and crackles are scheduled at random times as they occur. You can leave the same mix running for eight hours and no two minutes will be identical.</p></details>
-      <details><summary>Will it keep playing when my phone locks?</summary><p>Yes. It declares itself an audio app to iOS and runs a playback service on Android, so it plays all night with the screen off and shows on your lock screen.</p></details>
-      <details><summary>Do you collect anything?</summary><p>No, and not as a policy choice — the app makes no network requests, so there is no channel through which anything could leave your phone. Put it in airplane mode and it behaves identically. Your levels and saved mixes are stored on the device.</p></details>
-      <details><summary>What is free, exactly?</summary><p>All seven noise colours, plus rain, ocean, wind, fireplace, box fan, stream and crickets. Unlimited playback, background audio, the sleep timer and the paced breathing guide are never locked. Inside the app, tap any paid sound and it plays for thirty seconds, so you hear exactly what you would be buying before you pay.</p></details>
+    <p class="kicker r">Questions</p>
+    <h2 class="big r d1">Reasonable things to ask</h2>
+    <div style="margin-top:28px" class="r d2">
+      <details><summary>Does it really not loop?</summary><p>Really. There are no audio files in the app to loop. Noise is generated sample by sample, and events like raindrops, thunder and crackles are scheduled at random times as they occur. Leave the same mix running for eight hours and no two minutes are identical.</p></details>
+      <details><summary>Will it keep playing when my phone locks?</summary><p>Yes. It declares itself an audio app to iOS and runs a playback service on Android, so it plays all night with the screen off and appears on your lock screen.</p></details>
+      <details><summary>Do you collect anything?</summary><p>No, and not as a policy choice — the app makes no network requests, so there is no channel through which anything could leave your phone. Put it in airplane mode and it behaves identically. Levels and saved mixes stay on the device.</p></details>
+      <details><summary>What is free, exactly?</summary><p>All seven noise colours plus rain, ocean, wind, fireplace, box fan, stream and crickets. Unlimited playback, background audio, the sleep timer and the breathing guide are never locked. Tap any paid sound and it plays for thirty seconds, so you hear what you would be buying before you pay.</p></details>
       <details><summary>Is there a subscription?</summary><p>No, and there will not be one. A subscription pays for recording, licensing and hosting. We have none of those costs.</p></details>
-      <details><summary>Does it help with tinnitus?</summary><p>Many people use coloured noise for it, and Duskloom generates white, pink, brown, green, blue, grey and violet noise properly rather than playing a recording of them. We make no medical claim — talk to an audiologist about what is right for you.</p></details>
+      <details><summary>Does it help with tinnitus?</summary><p>Many people use coloured noise for it, and Duskloom generates white, pink, brown, green, blue, grey and violet noise properly rather than playing a recording of them. We make no medical claim — speak to an audiologist about what is right for you.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="close" id="get">
+  <div class="aura2"></div>
+  <div class="wrap">
+    <h2 class="big r" style="max-width:16ch;margin:0 auto 14px">Try it tonight</h2>
+    <p class="lede r d1">Fourteen sounds free, forever. Nothing to sign up for. If the rest are worth $14.99 to you, they are there — and you will have heard them first.</p>
+    <div class="cta-row r d2">
+      <a class="btn btn-solid" href="#" id="ios2">Download on the App Store</a>
+      <a class="btn btn-ghost" href="#" id="play2">Get it on Google Play</a>
     </div>
   </div>
 </section>
@@ -245,26 +385,105 @@
 <footer>
   <div class="wrap">
     <div>Duskloom by ClearPath Advisory</div>
-    <div style="display:flex;gap:20px">
+    <div style="display:flex;gap:22px">
       <a href="/privacy">Privacy</a>
-      <a href="#screens">Screens</a>
+      <a href="#sounds">Sounds</a>
       <a href="mailto:hello@duskloom.app">Contact</a>
     </div>
   </div>
 </footer>
 
 <script>
-  /* No analytics, no cookies, no third-party scripts — the privacy page says so and
-     it has to stay true. This is the only script on the page. */
-  document.querySelectorAll('#ios,#play').forEach(function(a){
+/* No analytics, no cookies, no third-party scripts. This is the only script here. */
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* reveal on scroll */
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.r').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.r').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* duplicate the strip so the marquee wraps seamlessly */
+  var track = document.getElementById('track');
+  if (track && !reduce) {
+    track.innerHTML += track.innerHTML;
+    track.querySelectorAll('figure:nth-child(n+7)').forEach(function(f){ f.setAttribute('aria-hidden','true'); });
+  }
+
+  /* the proof: a recording that repeats, beside sound that does not */
+  function strip(canvas, looping){
+    var c = canvas.getContext('2d'), bars = [], seam = [], W = 0, H = 0;
+    var N = 44, PATTERN = [];
+    for (var i = 0; i < N; i++) PATTERN.push(0.24 + Math.abs(Math.sin(i * 0.72)) * 0.52 + Math.random() * 0.14);
+    var idx = 0, last = 0.5;
+
+    function size(){
+      var r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height || 76;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    size();
+    window.addEventListener('resize', size);
+
+    function next(){
+      if (looping){
+        var v = PATTERN[idx % N], isSeam = (idx % N) === 0;
+        idx++;
+        return [v, isSeam];
+      }
+      last = last * 0.7 + (0.2 + Math.random() * 0.64) * 0.3;
+      return [last, false];
+    }
+
+    var acc = 0, prev = 0, BW = 5, GAP = 2;
+    function frame(t){
+      if (!prev) prev = t;
+      acc += Math.min(64, t - prev); prev = t;
+      while (acc > 56){ var n = next(); bars.push(n[0]); seam.push(n[1]); acc -= 56; }
+      var max = Math.ceil(W / (BW + GAP)) + 2;
+      while (bars.length > max){ bars.shift(); seam.shift(); }
+
+      c.clearRect(0, 0, W, H);
+      for (var i = 0; i < bars.length; i++){
+        var x = W - (bars.length - i) * (BW + GAP), h = bars[i] * H * 0.86, y = (H - h) / 2;
+        if (looping && seam[i]){
+          c.fillStyle = 'rgba(240,135,155,.8)';
+          c.fillRect(x - 2, 0, 1.5, H);
+        }
+        c.fillStyle = looping ? 'rgba(255,255,255,.32)' : 'rgba(127,216,196,.78)';
+        c.fillRect(x, y, BW, h);
+      }
+      if (!reduce) requestAnimationFrame(frame);
+    }
+    if (reduce){
+      for (var k = 0; k < 70; k++){ var n2 = next(); bars.push(n2[0]); seam.push(n2[1]); }
+    }
+    requestAnimationFrame(frame);
+  }
+  var l = document.getElementById('cLoop'), g = document.getElementById('cGen');
+  if (l && g){ strip(l, true); strip(g, false); }
+
+  /* placeholder store buttons */
+  ['ios','play','ios2','play2'].forEach(function(id){
+    var a = document.getElementById(id);
+    if (!a) return;
     a.addEventListener('click', function(e){
-      if(a.getAttribute('href') === '#'){
+      if (a.getAttribute('href') === '#'){
         e.preventDefault();
+        var was = a.textContent;
         a.textContent = 'Coming soon';
-        setTimeout(function(){ a.textContent = a.id === 'ios' ? 'Download on the App Store' : 'Get it on Google Play'; }, 1800);
+        setTimeout(function(){ a.textContent = was; }, 1800);
       }
     });
   });
+})();
 </script>
 </body>
 </html>
