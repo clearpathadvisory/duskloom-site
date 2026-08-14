@@ -92,6 +92,11 @@
   .btn-solid:hover{transform:translateY(-2px);box-shadow:0 16px 50px rgba(244,241,247,.2)}
   .btn-ghost{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
   .btn-ghost:hover{transform:translateY(-2px);background:var(--panel-2)}
+  .badge-link{display:inline-flex;align-items:center;height:56px;transition:transform .25s}
+  .badge-link:hover{transform:translateY(-2px)}
+  .badge-link img{height:56px;width:auto;display:block}
+  .soon{cursor:default;opacity:.55}
+  .soon:hover{transform:none;background:var(--panel)}
   .note{font-size:13.5px;color:var(--dimmer);margin-top:18px}
 
   /* gallery — framed devices, scrolled by hand */
@@ -303,9 +308,8 @@
     <p class="lede r d1">White, pink and brown noise. Rain, ocean, a box fan, a fireplace. Thirty-three layers you can stack into one sound to fall asleep to, or to disappear behind while you work.</p>
     <p class="lede r d1" style="margin-top:-16px;font-size:16.5px;color:var(--dimmer)">Every layer is synthesized on your device as you listen, so nothing ever loops — and nothing is streamed or collected.</p>
     <div class="cta-row r d2">
-      <!-- Replace both with the official Apple and Google badge artwork before launch -->
-      <a class="btn btn-solid" href="#" id="ios">Download on the App Store</a>
-      <a class="btn btn-ghost" href="#" id="play">Get it on Google Play</a>
+      <a class="badge-link" href="https://apps.apple.com/app/id6799165196" id="ios" aria-label="Download Duskloom on the App Store"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1754870400" alt="Download on the App Store" width="180" height="60"></a>
+      <span class="btn btn-ghost soon" id="play" aria-disabled="true">Google Play &mdash; soon</span>
     </div>
     <p class="note r d3">Free to use, no account, no sign-up. One payment unlocks everything.</p>
   </div>
@@ -457,8 +461,8 @@
     <h2 class="big r" style="max-width:16ch;margin:0 auto 14px">Try it tonight</h2>
     <p class="lede r d1">Fourteen sounds free, forever. Nothing to sign up for. If the rest are worth $14.99 to you, they are there — and you will have heard them first.</p>
     <div class="cta-row r d2">
-      <a class="btn btn-solid" href="#" id="ios2">Download on the App Store</a>
-      <a class="btn btn-ghost" href="#" id="play2">Get it on Google Play</a>
+      <a class="badge-link" href="https://apps.apple.com/app/id6799165196" id="ios2" aria-label="Download Duskloom on the App Store"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1754870400" alt="Download on the App Store" width="180" height="60"></a>
+      <span class="btn btn-ghost soon" id="play2" aria-disabled="true">Google Play &mdash; soon</span>
     </div>
   </div>
 </section>
@@ -625,19 +629,6 @@
     });
   }
 
-  /* placeholder store buttons */
-  ['ios','play','ios2','play2'].forEach(function(id){
-    var a = document.getElementById(id);
-    if (!a) return;
-    a.addEventListener('click', function(e){
-      if (a.getAttribute('href') === '#'){
-        e.preventDefault();
-        var was = a.textContent;
-        a.textContent = 'Coming soon';
-        setTimeout(function(){ a.textContent = was; }, 1800);
-      }
-    });
-  });
 })();
 </script>
 </body>
